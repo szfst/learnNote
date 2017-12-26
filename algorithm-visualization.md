@@ -23,29 +23,32 @@
 - <code>int i = l+1;//[lt+1,i-1]==p</code>
 - <code>int gt = r+1;//[gt,r]>p</code>
 ##### 五、堆排序：</br>
-<code> // 建堆</code>
-<code>   for(int i = (data.N()-1-1)/2;i>=0;i--){</code>
-<code>      shiftDown(data.N(),i);</code>
-<code>  }</code>
-<code>   // 堆排序</code>
-<code>  for(int i = data.N()-1;i>0;i--){</code>
-<code>      data.swap(i,0);</code>
-<code>      shiftDown(i,0);</code>
-<code>      setData(i);</code>
-<code>   }</code>
-<code>//注意，不能和排序完的元素再做shiftdown了</code>
-<code>private void shiftDown(int n,int k){</code>
-<code>  if(2*k+1<n){</code>
-<code>      int j = 2*k+1;</code>
-<code>      if(2*k+2<n && data.get(j+1)>data.get(j)){</code>
-<code>          j = j+1;</code>
-<code>       }</code>
-<code>      if(data.get(j)>data.get(k)){</code>
-<code>          data.swap(k,j);</code>
-<code>          shiftDown(n,j);</code>
-<code>       }</code>
-<code>   }</code>
-<code>}</code>
-  </code>
+```java
+//leftChild 2*n+1
+// rightChild 2n+2
+        // 建堆
+        for(int i = (data.N()-1-1)/2;i>=0;i--){
+            shiftDown(data.N(),i);
+        }
+        // 堆排序
+        for(int i = data.N()-1;i>0;i--){
+            data.swap(i,0);
+            shiftDown(i,0);
+            setData(i);
+        }
+//注意，不能和排序完的元素再做shiftdown了
+    private void shiftDown(int n,int k){
+        if(2*k+1<n){
+            int j = 2*k+1;
+            if(2*k+2<n && data.get(j+1)>data.get(j)){
+                j = j+1;
+            }
+            if(data.get(j)>data.get(k)){
+                data.swap(k,j);
+                shiftDown(n,j);
+            }
+        }
+    }
+```
 ##### 六、Fisher-Yates洗牌算法：
 ##### 七、FloodFill应用在抠图上面：
