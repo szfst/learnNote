@@ -24,4 +24,48 @@
 - 面试树的问题问的比较多，图相对少
 - 二叉树的遍历
 - 根据前序、遍历中序遍历找出后续遍历（方法一：建树，方法二：不建树）
+![avatar](http://images2015.cnblogs.com/blog/795187/201510/795187-20151023201552927-578458496.png)
+
+    public class Test {
+    class TreeNode
+    {
+        TreeNode left;
+        TreeNode right;
+        char  value;
+    };
+    public static void main(String[] args) {
+        String preOrder = "GDAFEMHZ";
+        String inOrder = "ADEFGHMZ";
+        Test test = new Test();
+        //不建树
+        System.out.println(test.getPostOrder(preOrder,inOrder));;
+        //建树
+        System.out.println(test.postOrder(test.postOrderGetTree(preOrder,inOrder) ));
+    }
+    //不建树
+    private String getPostOrder(String preOrder, String inOrder){
+        if(preOrder==null) return "";
+        if(preOrder.length()==0)return inOrder;
+        char root = preOrder.charAt(0);
+        int inOrderRootIndex = inOrder.indexOf(root);
+        return getPostOrder(preOrder.substring(1,inOrderRootIndex+1),inOrder.substring(0,inOrderRootIndex))
+                + getPostOrder(preOrder.substring(inOrderRootIndex+1,preOrder.length()),inOrder.substring(inOrderRootIndex+1,preOrder.length()))
+                +root;
+    }
+    //建树
+    private TreeNode postOrderGetTree(String preOrder,String inOrder){
+        if(preOrder==null || preOrder.length()==0)return null;
+        TreeNode root = new TreeNode();
+        char rootValue = preOrder.charAt(0);
+        root.value = rootValue;
+        int inOrderRootIndex = inOrder.indexOf(rootValue);
+        root.left = postOrderGetTree(preOrder.substring(1,inOrderRootIndex+1),inOrder.substring(0,inOrderRootIndex));
+        root.right = postOrderGetTree(preOrder.substring(inOrderRootIndex+1,preOrder.length()),inOrder.substring(inOrderRootIndex+1,preOrder.length()));
+        return root;
+    }
+    private String postOrder(TreeNode root){
+        if(root==null)return "";
+        return postOrder(root.left)+postOrder(root.right)+root.value;
+    }
+}
 - 寻找中序遍历的下一个节点
