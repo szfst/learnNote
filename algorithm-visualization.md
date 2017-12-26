@@ -19,11 +19,14 @@
 - 优化二：双路快排
 - 优化三：三路快排，非常优秀的算法，在近乎相同的数据中可以得到O(n)的，jdk8底层实现用的双路快排</br>
 定义好边界条件，也就是循环不变量，才能好好面对这种问题
-- <code>int lt = l;//[l+1,lt]<p</code>
-- <code>int i = l+1;//[lt+1,i-1]==p</code>
-- <code>int gt = r+1;//[gt,r]>p</code>
+```java
+int lt = l;//[l+1,lt]<p
+int i = l+1;//[lt+1,i-1]==p
+int gt = r+1;//[gt,r]>p
+```
 ##### 五、堆排序：</br>
 ```java
+//start index is 0
 //leftChild 2*n+1
 // rightChild 2n+2
         // 建堆
