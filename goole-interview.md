@@ -25,7 +25,7 @@
 - 二叉树的遍历
 - 根据前序、遍历中序遍历找出后续遍历（方法一：建树，方法二：不建树）
 ![avatar](http://images2015.cnblogs.com/blog/795187/201510/795187-20151023201552927-578458496.png)
-
+```java
     public class Test {
     class TreeNode
     {
@@ -68,4 +68,5 @@
         return postOrder(root.left)+postOrder(root.right)+root.value;
     }
 }
+```
 - 寻找中序遍历的下一个节点
