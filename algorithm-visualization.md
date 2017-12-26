@@ -22,6 +22,30 @@
 - <code>int lt = l;//[l+1,lt]<p</code>
 - <code>int i = l+1;//[lt+1,i-1]==p</code>
 - <code>int gt = r+1;//[gt,r]>p</code>
-##### 五、堆排序：
+##### 五、堆排序：</br>
+<code> // 建堆
+        for(int i = (data.N()-1-1)/2;i>=0;i--){
+            shiftDown(data.N(),i);
+        }
+        // 堆排序
+        for(int i = data.N()-1;i>0;i--){
+            data.swap(i,0);
+            shiftDown(i,0);
+            setData(i);
+        }
+  //注意，不能和排序完的元素再做shiftdown了
+    private void shiftDown(int n,int k){
+        if(2*k+1<n){
+            int j = 2*k+1;
+            if(2*k+2<n && data.get(j+1)>data.get(j)){
+                j = j+1;
+            }
+            if(data.get(j)>data.get(k)){
+                data.swap(k,j);
+                shiftDown(n,j);
+            }
+        }
+    }
+  </code>
 ##### 六、Fisher-Yates洗牌算法：
 ##### 七、FloodFill应用在抠图上面：
