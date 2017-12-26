@@ -28,7 +28,7 @@ int gt = r+1;//[gt,r]>p
 ```java
 //start index is 0
 //leftChild 2*n+1
-// rightChild 2n+2
+// rightChild 2*n+2
         // 建堆
         for(int i = (data.N()-1-1)/2;i>=0;i--){
             shiftDown(data.N(),i);
