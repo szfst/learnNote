@@ -1,9 +1,10 @@
-##### 一、事务：
+﻿##### 一、事务：
  ACID
 - Automicity
 - Consistency
 - Isolation
 - Durability
+
 
 隔离级别:
 - Read uncommitted
