@@ -73,3 +73,15 @@
 }
 ```
 - 寻找中序遍历的下一个节点
+##### 四、面向对象
+- java中重写equal为什么要先重写hashcode？如果判断相等，首先判断hashcode是否相等，hashcode相等的前提下，equal才有可能相等。hashcode相等是equal的必要非充分条件
+- 接口和抽象类的区别
+抽象类可以有成员函数
+抽象类可以部分实现
+抽象类不可多重继承，但是接口可以
+- 实现接口的时候，阅读接口的文档，按照接口合约规范实现接口
+- 子类只可以增加父类的功能或者权限，但是不能减少
+private ---> public   √
+public  ---> private ×
+can not reduce visibility
+- 泛型的java实现：java Type Erase
