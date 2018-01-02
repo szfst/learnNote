@@ -75,13 +75,41 @@
 - 寻找中序遍历的下一个节点
 ##### 四、面向对象
 - java中重写equal为什么要先重写hashcode？如果判断相等，首先判断hashcode是否相等，hashcode相等的前提下，equal才有可能相等。hashcode相等是equal的必要非充分条件
-- 接口和抽象类的区别
-抽象类可以有成员函数
-抽象类可以部分实现
+- 接口和抽象类的区别</br>
+抽象类可以有成员函数</br>
+抽象类可以部分实现</br>
 抽象类不可多重继承，但是接口可以
 - 实现接口的时候，阅读接口的文档，按照接口合约规范实现接口
-- 子类只可以增加父类的功能或者权限，但是不能减少
-private ---> public   √
-public  ---> private ×
+- 子类只可以增加父类的功能或者权限，但是不能减少</br>
+private ---> public   √</br>
+public  ---> private ×</br>
 can not reduce visibility
-- 泛型的java实现：java Type Erase
+- 泛型的java实现：java Type Erase，也就是，java的泛型在运行的时候，是会被擦除掉的，为了兼容之前的版本，也就是运行时：List,List<String>,List<Integer>没有区别
+- 尽量只使用private和public
+- 设计模式：Decorator pattern，Abstract factory pattern，Builder Pattern</br>
+```java
+//Builder Pattern
+employee = Employee.fromEnistring(oldEmplyee).withSalary(1500).builder
+```
+##### 五、高级部分
+- 外部排序（例如10G的数据，内存不够了，就要使用外部排序）</br>
+扩展的归并排序，分为多段（k路归并，技术点：堆实现，添加缓存）
+- 死锁
+防止死锁：</br>
+- - 破除互斥等待：一般情况下无法破解
+- - 破除hold and wait：一次性获取所有的资源
+- - 破除循环等待：按顺序获取资源
+- - 破除无法剥夺的等待：加入超市
+##### 六、软技巧
+- 每次自我介绍的目的：破冰
+- 表达能力：结构化表达
+- 不用介绍太多技术，把核心的自己熟练
+- `有优势的介绍：我改进了xxx算法，使得效率提高了x%`
+- `面试遇到问题的态度`：不要逃避（因为如果逃避，面试官觉得你在工作中也会逃避），实在不行要和面试官沟通，有可能会有提示。
+- `多问问问题的细节`（有可能面试官就等着你提问）</br>
+例如：给出一个数字，你可以问，数组里面的数据是否有序？是否重复？还是几乎有序？
+- 最后想面试官问问提</br>
+有用的：介绍下您所在所在的项目组，公司有什么吸引您的地方</br>
+无用的：没问题，对下一轮有什么建议，面试结果什么时候知道</br>
+不能问的：我面试得怎么样
+- 谷歌在线平台和leetcode练习
