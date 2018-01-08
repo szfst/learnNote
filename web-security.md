@@ -95,10 +95,25 @@
 	- QQ视屏借钱
 	- 微信好友伪装
 - OAuth思想
-```sequence
-用户-->网站: 0、请求第三方登录
-网站-->QQ:1、重定向到QQ
-用户-->QQ:2、输入密码登录
-QQ-->网站:3、登录成功
-
-```
+	- ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/img/web-security/oauth.png)
+	- 一切行为由用户授权
+	- 授权行为不泄露敏感信息
+	- 授权会过期 
+- 利用OAuth思想防止用户资料泄露
+    - ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/img/web-security/use-oauth.png)
+	- 用户授权读取资料
+	- 无授权资料不可读取
+	- 不允许批量获取数据
+	- 数据接口可风控审计
+##### 九、其他安全问题
+- 拒绝服务DOS
+	- 介绍：模拟正常用户、大量占用服务器资源、无法服务正常用户
+	- 类型：TCP半链接、HTTP链接、DNS
+	- DDOS：流量可达几十到上百G、分布式（肉鸡，代理）、极难预防
+	- 案例：游戏私服互相攻击-->换目标，攻击DNS-->DNS服务器机器下线-->数十万网站DNS解析瘫痪-->暴风影音后台疯狂请求解析-->各地local DNS瘫痪 无法上网
+	- DOS攻击预防：防火墙、交换机路由器、流量清洗、高防IP
+	- DOS攻击预防2： 避免重逻辑业务、快速失败快速返回、防雪崩机制、有损服务（有损失地提供服务）、CDN
+- 重放攻击
+	- 介绍：请求被窃听或者记录、再次发起相同请求、产生意外的结果
+	- 重放攻击预防：加密(HTTPS)、时间戳、token(session)、nonce、签名
+##### 十、总结与问题
