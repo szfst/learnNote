@@ -1,154 +1,154 @@
-##### һ��XSS��
-- cross site script����վ�ű�����
-- Ԥ��XSS:
-  - ����ת�庯��
-  - DOM����������
-  - ��������
-  - CSP��Content Security Policy
-##### ����CSRF��
- - Cross-site request forgery����վ����α��</br>
- - Ԥ��
-   - Cookie same site����
-   - HTTP refererͷ
+##### 一、XSS：
+- cross site script：跨站脚本攻击
+- 预防XSS:
+  - 内置转义函数
+  - DOM解析白名单
+  - 第三方库
+  - CSP：Content Security Policy
+##### 二、CSRF：
+ - Cross-site request forgery：跨站请求伪造</br>
+ - 预防
+   - Cookie same site属性
+   - HTTP referer头
    - token
-##### ����Cookies-��ȫ����
-- ��ȫ����
-  - ǩ�����۸�
-  - ˽�б任(����)
-  - http-only����ֹxss��
-  - security��https��
+##### 三、Cookies-安全策略
+- 安全策略
+  - 签名防篡改
+  - 私有变换(加密)
+  - http-only（防止xss）
+  - security（https）
   - same site
-##### �ġ�����ٳ�
-- Ԥ������ٳ֣�
-  - JavaScript��ֹ��Ƕ
-  - X-FRAME-OPTIONS��ֹ��Ƕ
-  - ���������ֶ�
-##### �塢HTTP���䰲ȫ
-- HTTP����
-  - ������������
-  - ��������������Ϣ
-  - �Ƿ���ȡ��������
-- HTTP�۸�
-  - ������
-  - �ض�����վ
-  - �޷�������XSS��CSRF����
-- ȷ�����������ݣ�����֤�飬https
-	- ֤���޷�α��
-	- ֤��˽Կ����й¶
-	- ��������Ȩ��й¶
-	- CA����ԭ��
-##### �������밲ȫ
-- ��ϣ�㷨
-	- ��������һһ��Ӧ
-	- ѩ��ЧӦ������ֻҪ��һ�㲻ͬ��������ȫ����ͬ
-	- ���������޷�����
-	- ���Ĺ̶�����
-	- ������ϣ�㷨��md5��sha2��sha256
-- ������������
-	- ˽���ԣ�����й¶
-	- ��ȫ�ԣ���ײ
-	- Ψһ�ԣ������޷��ı�
-- ���봫�䰲ȫ��
-	- https����
-	- Ƶ�����ƣ����Դ�������
-	- ǰ�˼�����������
-- ����洢��ȫ��
-	- ��ֹ���Ĵ洢����ֹй¶��
-	- ����任��Ҳ���ǲ�������ģ���ֹй¶��
-	- �任���Ӷ�Ҫ�󣨷��½⣩
-	- ���븴�Ӷ�Ҫ�󣨷��½⣩
-- ����й¶����
-	- ���ݿⱻ͵
-	- ������������
-	- ͨѶ������
-	- �ڲ���Աй¶����
-	- ������վ��ײ�⣩
-- �任����Խ��Խ��ȫ
-	- ���ܳɱ��������䣨��������ʱ�ٶ���һЩ��
-	- �ʺ��ʧЧ������̫���޷�����ͨ���ԣ�
-	- ���ܳɱ�����N��
-##### �ߡ�SQLע��
-- ��ֹSQLע��
-	- �����������
-	- �����ݽ���ת��
-	- ʹ�ò�������ѯ
-	- ʹ��ORM�������ϵӳ�䣩
-##### �ˡ��ϴ�©��
-- �����ϴ�©��
-	- �����ϴ���׺
-	- �ļ����ͼ��
-	- �ļ����ݼ��
-	- �������
-	- Ȩ�޿��ƣ���д��ִ�л���
-##### �š���Ṥ��ѧ
-- ��Ϣй¶
-	- й¶ϵͳ������Ϣ
-	- й¶�û�������Ϣ
-	- й¶�û�����
-- ��Ϣй¶��;��
-	- ������Ϣʧ��
-	- SQLע��
-	- ˮƽȨ�޿��Ʋ���
+##### 四、点击劫持
+- 预防点击劫持：
+  - JavaScript禁止内嵌
+  - X-FRAME-OPTIONS禁止内嵌
+  - 其他辅助手段
+##### 五、HTTP传输安全
+- HTTP窃听
+  - 窃听用于密码
+  - 窃听传输敏感信息
+  - 非法获取个人资料
+- HTTP篡改
+  - 插入广告
+  - 重定向网站
+  - 无法防御的XSS和CSRF攻击
+- 确定服务器身份：申请证书，https
+	- 证书无法伪造
+	- 证书私钥不被泄露
+	- 域名管理权不泄露
+	- CA坚守原则
+##### 六、密码安全
+- 哈希算法
+	- 明文密文一一对应
+	- 雪崩效应：明文只要有一点不同，密文完全不相同
+	- 密文明文无法反推
+	- 密文固定长度
+	- 常见哈希算法：md5，sha2，sha256
+- 生物特征密码
+	- 私密性：容易泄露
+	- 安全性：碰撞
+	- 唯一性：终身无法改变
+- 密码传输安全性
+	- https传输
+	- 频率限制：尝试次数限制
+	- 前端加密意义有限
+- 密码存储安全性
+	- 禁止明文存储（防止泄露）
+	- 单向变换，也就是不变回明文（防止泄露）
+	- 变换复杂度要求（防猜解）
+	- 密码复杂度要求（防猜解）
+- 密码泄露渠道
+	- 数据库被偷
+	- 服务器被入侵
+	- 通讯被窃听
+	- 内部人员泄露数据
+	- 其他网站（撞库）
+- 变换次数越多越安全
+	- 加密成本几乎不变（生成密码时速度慢一些）
+	- 彩虹表失效（数量太大，无法建立通用性）
+	- 解密成本增大N倍
+##### 七、SQL注入
+- 防止SQL注入
+	- 检查数据类型
+	- 对数据进行转义
+	- 使用参数化查询
+	- 使用ORM（对象关系映射）
+##### 八、上传漏洞
+- 防御上传漏洞
+	- 限制上传后缀
+	- 文件类型检查
+	- 文件内容检查
+	- 程序输出
+	- 权限控制：可写可执行互斥
+##### 九、社会工程学
+- 信息泄露
+	- 泄露系统敏感信息
+	- 泄露用户敏感信息
+	- 泄露用户密码
+- 信息泄露的途径
+	- 错误信息失控
+	- SQL注入
+	- 水平权限控制不当
 	- XSS/CSRF
 	- ...
-- ��Ṥ��ѧ
-	- ��������������յ�����ȷ��
-	- �����������������
-	- ����αװ���������
-	- ����������ݸɻ���
-- ��Ṥ��ѧ����
-	- ����թƭ
-	- αװ���취
-	- QQ������Ǯ
-	- ΢�ź���αװ
-- OAuth˼��
-	- ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/img/web-security/oauth.png)
-	- һ����Ϊ���û���Ȩ
-	- ��Ȩ��Ϊ��й¶������Ϣ
-	- ��Ȩ����� 
-- ����OAuth˼���ֹ�û�����й¶
-    - ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/img/web-security/use-oauth.png)
-	- �û���Ȩ��ȡ����
-	- ����Ȩ���ϲ��ɶ�ȡ
-	- ������������ȡ����
-	- ���ݽӿڿɷ�����
-##### ʮ��������ȫ����
-- �ܾ�����DOS
-	- ���ܣ�ģ�������û�������ռ�÷�������Դ���޷����������û�
-	- ���ͣ�TCP�����ӡ�HTTP���ӡ�DNS
-	- DDOS�������ɴＸʮ���ϰ�G���ֲ�ʽ���⼦��������������Ԥ��
-	- ��������Ϸ˽�����๥��-->��Ŀ�꣬����DNS-->DNS��������������-->��ʮ����վDNS����̱��-->����Ӱ����̨����������-->����local DNS̱�� �޷�����
-	- DOS����Ԥ��������ǽ��������·������������ϴ���߷�IP
-	- DOS����Ԥ��2�� �������߼�ҵ�񡢿���ʧ�ܿ��ٷ��ء���ѩ�����ơ������������ʧ���ṩ���񣩡�CDN
-- �طŹ���
-	- ���ܣ������������߼�¼���ٴη�����ͬ���󡢲�������Ľ��
-	- �طŹ���Ԥ��������(HTTPS)��ʱ�����token(session)��nonce��ǩ��
-##### ʮһ���ܽ�������
+- 社会工程学
+	- 你的身份由你掌握的资料确定
+	- 别人掌握了你的资料
+	- 别人伪装成你的身份
+	- 利用你的身份干坏事
+- 社会工程学案例
+	- 电信诈骗
+	- 伪装公检法
+	- QQ视屏借钱
+	- 微信好友伪装
+- OAuth思想
+	- ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/web-security/img/web-security/oauth.png)
+	- 一切行为由用户授权
+	- 授权行为不泄露敏感信息
+	- 授权会过期 
+- 利用OAuth思想防止用户资料泄露
+    - ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/web-security/img/web-security/use-oauth.png)
+	- 用户授权读取资料
+	- 无授权资料不可读取
+	- 不允许批量获取数据
+	- 数据接口可风控审计
+##### 十、其他安全问题
+- 拒绝服务DOS
+	- 介绍：模拟正常用户、大量占用服务器资源、无法服务正常用户
+	- 类型：TCP半链接、HTTP链接、DNS
+	- DDOS：流量可达几十到上百G、分布式（肉鸡，代理）、极难预防
+	- 案例：游戏私服互相攻击-->换目标，攻击DNS-->DNS服务器机器下线-->数十万网站DNS解析瘫痪-->暴风影音后台疯狂请求解析-->各地local DNS瘫痪 无法上网
+	- DOS攻击预防：防火墙、交换机路由器、流量清洗、高防IP
+	- DOS攻击预防2： 避免重逻辑业务、快速失败快速返回、防雪崩机制、有损服务（有损失地提供服务）、CDN
+- 重放攻击
+	- 介绍：请求被窃听或者记录、再次发起相同请求、产生意外的结果
+	- 重放攻击预防：加密(HTTPS)、时间戳、token(session)、nonce、签名
+##### 十一、总结与问题
 - XSS
-	- �����XSS��ԭ��
-	- �����XSS�ķ�������
-	- XSS������Ҫע��ĵ�
+	- 请简述XSS的原理
+	- 请简述XSS的防御方法
+	- XSS防御需要注意的点
 - CSRF
-	- CSRF��ԭ����ʲô
-	- CSRF��Σ����ʲô
-	- ���Ԥ��CSRF
+	- CSRF的原理是什么
+	- CSRF的危害是什么
+	- 如何预防CSRF
 - cookies
-	- Cookies��������ʲô
-	- Cookies��session��������ʲô
-	- Cookies����һЩ����
-	- ���ɾ��һ��Cookies�����ù���ʱ�䣩
+	- Cookies的作用是什么
+	- Cookies和session的区别是什么
+	- Cookies有哪一些特性
+	- 如何删除一个Cookies（设置过期时间）
 - HTTPS:
-	- HTTPS����α�֤���ݲ���������
-	- HTTPS����α�֤�����м��˹�����
-	- ����HTTPS�Ĳ���
-- SQLע��
-	- SQLע���ԭ����ʲô
-	- SQLע������ЩΣ��
-	- ��η�ֹSQLע��
-- �ļ��ϴ�
-	- �ļ��ϴ�©����ԭ����ʲô
-	- ��η����ļ��ϴ�©��
-- ����
-	- �������û�����洢
-	- �����Ƶ�¼����
-	- ��α�֤�û����벻������
+	- HTTPS是如何保证数据不被窃听的
+	- HTTPS是如何保证不被中间人攻击的
+	- 部署HTTPS的步骤
+- SQL注入
+	- SQL注入的原理是什么
+	- SQL注入有哪些危害
+	- 如何防止SQL注入
+- 文件上传
+	- 文件上传漏洞的原理是什么
+	- 如何防范文件上传漏洞
+- 密码
+	- 如何设计用户密码存储
+	- 如何设计登录过程
+	- 如何保证用户密码不被窃听
