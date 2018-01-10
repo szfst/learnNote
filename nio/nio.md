@@ -4,7 +4,7 @@
 ##### 二、传统IO模型，存在的阻塞点：
  -  ![avatar](https://raw.githubusercontent.com/szfst/learnNote/master/nio/img/io.png)
  - 传统IO，socket编程（windows telnet ctrl+]可发送多个字符，cmd的字符集为GBK）
- - 阻塞点：
+ - [阻塞点]https://github.com/szfst/learnNote/blob/master/nio/code/TraditionalSocketDemo.java：
 	 - <code>Socket socket = serverSocket.accept();</code>
 	 -  <code>int data = is.read(b);</code>
      - 启用多个线程
