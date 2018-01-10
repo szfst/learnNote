@@ -18,7 +18,7 @@
 - 相比传统IO改进：
   - 增加了一个重要角色（Selector），主要负责调度和监控客户端和服务器（调度器），可以选择为哪个客户端服务(其实它内部也是有一个线程池)
   - 由阻塞方式改为非阻塞（non-blocking）
-  -[阻塞点](https://github.com/szfst/learnNote/blob/master/nio/code/NioSocketDemo.java)：
+  - [阻塞点](https://github.com/szfst/learnNote/blob/master/nio/code/NioSocketDemo.java)：
 	  - <code>selector.select();</code>
 	  - 真正关心的阻塞点事：读取数据（没有阻塞）
 ##### 四、对比总结
