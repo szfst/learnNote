@@ -9,18 +9,22 @@
 - 2、选择：日志门面：SL4J;日志实现：logback
 - 3、日志级别：可以自定义输出什么级别的(可以定义小于的不输出，等于的不输出，或者等于的输出)
 	- 日志级别源码分类：</br>
-	`    ERROR(40, "ERROR"),
+	```java
     WARN(30, "WARN"),
     INFO(20, "INFO"),
     DEBUG(10, "DEBUG"),
-    TRACE(0, "TRACE");`
+    TRACE(0, "TRACE");
+    ```
 - 4、@SL4J：就可以不用写当前的类名
 	- @Data 可以不写get、set方法 
 	- 安装lombok plugin
-	- 引入这个依赖`        <dependency>
+	- 引入这个依赖：</br>
+```java
+	 <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>`
+        </dependency>
+```
  - 5、可以区分info和error文件存放日志       
 ##### 二、微信：
 - 区分公众平台和开放平台
