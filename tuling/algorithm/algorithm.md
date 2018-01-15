@@ -1,0 +1,10 @@
+##### 一、数据结构和算法：
+- 1、求数的阶乘：
+	- 用数据结构----数组存储
+- 2、LinkedList和ArrayList：
+	- LinkedList底层使用双向循环链表实现、ArrayList使用动态数组实现
+	- 添加：LinkedList的效率高
+	- 删除：LinkedList综合来讲效率高）
+		- ArrayList循环删除，从后面删除效率比较高
+		- LinkedList删除数据：删除前面和后面的效率高，越往中间走效率越低
+	- 获取和设置：ArrayList的效率高很多
