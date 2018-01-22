@@ -21,7 +21,7 @@
   - [阻塞点](https://github.com/szfst/learnNote/blob/master/nio/code/NioSocketDemo.java)：
 	  - <code>selector.select();</code>
 	  - 真正关心的阻塞点事：读取数据（没有阻塞）
-  - 1、客户端关闭的时候会抛出异常、死循环，解决方案：
+- 1、客户端关闭的时候会抛出异常、死循环，解决方案：
 		```java
 		int read = channel.read(buffer);
 		if(read > 0){
