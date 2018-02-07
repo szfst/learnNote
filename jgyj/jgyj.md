@@ -43,11 +43,11 @@
         log.info("关闭订单定时任务结束");
         
 - 2、优化思路：
-    - 为什么要用此方法：双重防止死锁，防止在未设置expire的时候关闭程序，锁头无法释放
+    - 为什么要用此方法：双重防止死锁，防止在未设置expire的时候关闭程序，锁无法释放
 
 ![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/redis/redis-2.jpg?raw=true)
 
-	log.info("关闭订单定时任务启动");
+	    log.info("关闭订单定时任务启动");
         long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));
         Long setnxResult = RedisShardedPoolUtil.setnx(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTimeout));
         if(setnxResult != null && setnxResult.intValue() == 1){
