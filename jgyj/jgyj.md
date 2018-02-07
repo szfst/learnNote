@@ -1,5 +1,4 @@
-##### 二、架构演进：
-- 高并发思路：
+﻿- 高并发思路：
 	- 队列削峰（限流）：广播机制、分组消费
 	- 并发分布式锁，单点处理共享
 	- 数据实时性的取舍
@@ -12,6 +11,76 @@
 	- 3、type：查看key值类型，type a
 	- 4、nx结尾命令
 	- 5、jedis和redis的版本最好保持一致
+	- 6、redis命名空间管理，用":",
+	- 7、redis-cli监听日志命令：monitor
+- redis分布式 
+	- 1、setnx和getset方法都有原子性
+	- 2、redis分布式命令：setnx、getset、expire、del方法
+	- 3、分布式流程图：
+		- 1、基本思路：
+![avatar](https://github.com/szfst/interview-learn/blob/master/jgs/redis/redis-1.jpg?raw=true)
+
+	log.info("关闭订单定时任务启动");
+	long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));
+	Long setnxResult = RedisShardedPoolUtil.setnx(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTimeout));
+        if(setnxResult != null && setnxResult.intValue() == 1){
+            //如果返回值是1，代表设置成功，获取锁
+            closeOrder(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+        }else{
+            log.info("没有获得分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+        }
+        log.info("关闭订单定时任务结束");
+        
+- 2、优化思路：
+![avatar](https://github.com/szfst/interview-learn/blob/master/jgs/redis/redis-2.jpg?raw=true)
+
+	    log.info("关闭订单定时任务启动");
+        long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));
+        Long setnxResult = RedisShardedPoolUtil.setnx(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTimeout));
+        if(setnxResult != null && setnxResult.intValue() == 1){
+            closeOrder(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+        }else{
+            //未获取到锁，继续判断，判断时间戳，看是否可以重置并获取到锁
+            String lockValueStr = RedisShardedPoolUtil.get(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+            if(lockValueStr != null && System.currentTimeMillis() > Long.parseLong(lockValueStr)){
+                String getSetResult = RedisShardedPoolUtil.getSet(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTimeout));
+                //再次用当前时间戳getset。
+                //返回给定的key的旧值，->旧值判断，是否可以获取锁
+                //当key没有旧值时，即key不存在时，返回nil ->获取锁
+                //这里我们set了一个新的value值，获取旧的值。
+                if(getSetResult == null || (getSetResult != null && StringUtils.equals(lockValueStr,getSetResult))){
+                    //真正获取到锁
+                    closeOrder(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+                }else{
+                    log.info("没有获取到分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+                }
+            }else{
+                log.info("没有获取到分布式锁:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+            }
+        }
+        log.info("关闭订单定时任务结束");
+		- 3、java直接用redission
+```java	
+	        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+        boolean getLock = false;
+        try {
+            if(getLock = lock.tryLock(0,50, TimeUnit.SECONDS)){
+                log.info("Redisson获取到分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
+//                iOrderService.closeOrder(hour);
+            }else{
+                log.info("Redisson没有获取到分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+            }
+        } catch (InterruptedException e) {
+            log.error("Redisson分布式锁获取异常",e);
+        } finally {
+            if(!getLock){
+                return;
+            }
+            lock.unlock();
+            log.info("Redisson分布式锁释放锁");
+        }
+```
 - redis配置
 最大连接数
 redis.max.total=20
@@ -27,3 +96,10 @@ redis.test.return=false
 config.setBlockWhenExhausted(true);//连接耗尽的时候，是否阻塞，false会抛出异常，true阻塞直到超时。默认为true。
 - pool.close()
 	- 弃用RedisPool.returnBrokenResource(jedis)，           RedisPool.returnResource(jedis)，改用close方法。
+- 单点登录：
+	- cookie.setHttpOnly(true);不能通过脚本获取cookie，防止攻击（防止别人吧cookies发送到自己的网站做非法用途）
+- redis分布式：
+	- 分布式算法：consistent hashing（一致性hash算法）
+	- 原理：环形hash，虚拟节点
+		- 命中率计算公式：（1-n/(n+m))*100%，n为服务器数量
+	- java代码：shardedJedis
