@@ -1,10 +1,10 @@
-﻿- 高并发思路：
-	- 队列削峰（限流）：广播机制、分组消费
-	- 并发分布式锁，单点处理共享
-	- 数据实时性的取舍
-	- 缓存
-	- 服务降级
-##### 三、redis
+﻿##### 一、高并发思路：
+- 队列削峰（限流）：广播机制、分组消费
+- 并发分布式锁，单点处理共享
+- 数据实时性的取舍
+- 缓存
+- 服务降级
+##### 二、redis
 - 基本补充内容
 	- 1、默认的数据库16个，默认取第0个，用select 1切换数据库
 	- 2、ttl：查看剩余时间，以秒为单位，-1表示不会过期，-2表示没有这个值或者过期了。
@@ -21,6 +21,16 @@
 		
 ![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/redis/redis-1.jpg?raw=true)
 
+	    private void closeOrder(String lockName){
+        RedisShardedPoolUtil.expire(lockName,5);//有效期50秒，防止死锁
+        log.info("获取{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+        int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
+        iOrderService.closeOrder(hour);
+        RedisShardedPoolUtil.del(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+        log.info("释放{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+        log.info("===============================");
+    }
+    //
 	log.info("关闭订单定时任务启动");
 	long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));
 	Long setnxResult = RedisShardedPoolUtil.setnx(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTimeout));
@@ -33,6 +43,7 @@
         log.info("关闭订单定时任务结束");
         
 - 2、优化思路：
+- 为什么要用此方法：双重防止死锁，防止在未设置expire的时候关闭程序，锁头无法释放
 
 ![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/redis/redis-2.jpg?raw=true)
 
@@ -61,8 +72,8 @@
             }
         }
         log.info("关闭订单定时任务结束");
-		- 3、java直接用redission
-		
+- 3、java直接用redission
+	redission wait_time，获取锁的等待时间，最好统一设置为0，防止有坑	
 ```java	
 	        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         boolean getLock = false;
@@ -106,3 +117,13 @@ config.setBlockWhenExhausted(true);//连接耗尽的时候，是否阻塞，fals
 	- 原理：环形hash，虚拟节点
 		- 命中率计算公式：（1-n/(n+m))*100%，n为服务器数量
 	- java代码：shardedJedis
+- redis主从配置，配置slave of，主从同步，冲不能读只能写，主写从就有，但是从不能读
+##### 三、nginx：
+1、upstream：
+![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/nginx/nginx-1.jpg?raw=true)
+2、nginx静态文件需要重新配置，否则有可能出现访问异常
+3、可以通过nginx开放80端口，其他的都可以通过nginx去做跳转，不需要开放了。
+##### 四、restful：
+restful是根据资源来定位的
+1、哪些接口不适合用restful？传递一个对象的情况，用restful就很难受
+2、遇到这些难处怎么办？自定义资源占位（也就是在url多加一些自定义的资源）
