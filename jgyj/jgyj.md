@@ -13,12 +13,13 @@
 	- 5、jedis和redis的版本最好保持一致
 	- 6、redis命名空间管理，用":",
 	- 7、redis-cli监听日志命令：monitor
-- redis分布式 
+- redis分布式锁
 	- 1、setnx和getset方法都有原子性
 	- 2、redis分布式命令：setnx、getset、expire、del方法
 	- 3、分布式流程图：
 		- 1、基本思路：
-![avatar](https://github.com/szfst/interview-learn/blob/master/jgs/redis/redis-1.jpg?raw=true)
+		
+![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/redis/redis-1.jpg?raw=true)
 
 	log.info("关闭订单定时任务启动");
 	long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));
@@ -32,7 +33,8 @@
         log.info("关闭订单定时任务结束");
         
 - 2、优化思路：
-![avatar](https://github.com/szfst/interview-learn/blob/master/jgs/redis/redis-2.jpg?raw=true)
+
+![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/redis/redis-2.jpg?raw=true)
 
 	    log.info("关闭订单定时任务启动");
         long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout","5000"));
@@ -60,6 +62,7 @@
         }
         log.info("关闭订单定时任务结束");
 		- 3、java直接用redission
+		
 ```java	
 	        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         boolean getLock = false;
