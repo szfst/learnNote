@@ -117,7 +117,7 @@ config.setBlockWhenExhausted(true);//连接耗尽的时候，是否阻塞，fals
 	- 原理：环形hash，虚拟节点
 		- 命中率计算公式：（1-n/(n+m))*100%，n为服务器数量
 	- java代码：shardedJedis
-- redis主从配置，配置slave of，主从同步，冲不能读只能写，主写从就有，但是从不能读
+- redis主从配置，配置slave of，主从同步，从不能写只能读，主写了数据之后从就有主写的数据，但是从不能写
 ##### 三、nginx：
 - 1、upstream：</br>
 ![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/nginx/nginx-1.jpg?raw=true)
