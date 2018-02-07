@@ -119,10 +119,10 @@ config.setBlockWhenExhausted(true);//连接耗尽的时候，是否阻塞，fals
 	- java代码：shardedJedis
 - redis主从配置，配置slave of，主从同步，冲不能读只能写，主写从就有，但是从不能读
 ##### 三、nginx：
-1、upstream：
+- 1、upstream：
 ![avatar](https://github.com/szfst/learnNote/blob/master/jgyj/nginx/nginx-1.jpg?raw=true)
-2、nginx静态文件需要重新配置，否则有可能出现访问异常
-3、可以通过nginx开放80端口，其他的都可以通过nginx去做跳转，不需要开放了。
+- 2、nginx静态文件需要重新配置，否则有可能出现访问异常
+- 3、可以通过nginx开放80端口，其他的都可以通过nginx去做跳转，不需要开放了。
 ##### 四、restful：
 </br>restful是根据资源来定位的
 - 1、哪些接口不适合用restful？传递一个对象的情况，用restful就很难受
